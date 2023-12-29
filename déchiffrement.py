@@ -3,7 +3,7 @@ import shutil
 import subprocess
 import sys
 
-def secure_decrypt_and_process(key_iv_path, source_dir, destination_dir):
+def traiter_fichiers_dossiers(key_iv_path, source_dir, destination_dir):
     if not os.path.exists(destination_dir):
         os.makedirs(destination_dir)
 
@@ -14,19 +14,19 @@ def secure_decrypt_and_process(key_iv_path, source_dir, destination_dir):
         folder_path = os.path.join(source_dir, folder_name)
         if os.path.isdir(folder_path):
             for key, iv in key_iv_pairs:
-                decryption_success = secure_decrypt(folder_path, key.strip(), iv.strip())
-                secure_process_files(folder_path, destination_dir, decryption_success)
+                decryption_success = déchiffrement(folder_path, key.strip(), iv.strip())
+                traiter_fichier(folder_path, destination_dir, decryption_success)
 
-def secure_decrypt(folder_path, key, iv):
+def déchiffrement(folder_path, key, iv):
     try:
         subprocess.run(['crypto_app.exe', '1PP0wpZEOM', 'd', folder_path + "\\", key, iv], check=True)
-        print(f"Secure Decryption successful for folder {folder_path} with key: {key} and IV: {iv}")
+        print(f"Déchiffrement réussi pour le dossier : {folder_path} avec la clef : {key} et l'IV: {iv}")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"Secure Failed to decrypt folder {folder_path} with key: {key} and IV: {iv}. Error: {e}")
+        print(f"déchiffrement raté pour le dossier : {folder_path} avec la clef: {key} et l'IV: {iv}.")
         return False
 
-def secure_process_files(src_folder, dest_folder, is_decrypt_successful):
+def traiter_fichier(src_folder, dest_folder, is_decrypt_successful):
     for i, filename in enumerate(os.listdir(src_folder), start=1):
         file_path = os.path.join(src_folder, filename)
         if os.path.isfile(file_path) and not filename.endswith('.pachy'):
@@ -40,11 +40,11 @@ def secure_process_files(src_folder, dest_folder, is_decrypt_successful):
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print("Usage: python script.py key_iv_file source_folder destination_folder")
+        print("Utilisation: python déchiffrement.py [chemin vers le fichier contenant les clef et iv] [chemin vers le dossier contenant les fichiers à déchiffrement] [chemin vers le dossier ou vont les fichiers déchiffrés]")
         sys.exit(1)
 
     key_iv = sys.argv[1]
     dossier = sys.argv[2]
     destination = sys.argv[3]
 
-    secure_decrypt_and_process(key_iv, dossier, destination)
+    traiter_fichiers_dossiers(key_iv, dossier, destination)
