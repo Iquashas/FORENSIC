@@ -1,9 +1,9 @@
-# forensic et autres fichiers en bash
+## forensic et autres fichiers en bash
 
 analyse les fichiers .pcap pour les protocoles décrit dans leur nom de fichier.
 pour utiliser : il faut changer le chemin du dossier contenant tous les fichiers .pcap dans la variable "répertoire", dans mon cas, je l'ai ajuster pour mon environnement.
 
-#déchiffrement
+## déchiffrement
 
 déchiffre tous les fichiers chiffré en .pachy avec un fichier contenant les clé et iv séparés par ":" une clé et une iv par ligne. 
 Les fichiers doivent être disposés dans des sous-dossiers chacuns contenant un des fichiers. 
@@ -13,7 +13,7 @@ python [fichier.py] [chemin vers le fichier contenant les clef et iv] [chemin ve
 
 le fichier contenant les clef et iv doivent être formaté ainsi : [clef]:[iv]
 
-#hash
+## hash
 
 permet de calculer le hash des fichiers qui nous ont été utiles durant notre enquête 
 
